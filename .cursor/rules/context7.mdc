@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+Always use context7 MCP when I need code generation, setup or configuration steps, or library/API
+documentation to get the most up to date/stable information/standards except if i specify otherwise.

@@ -1,0 +1,34 @@
+# macOS artifacts
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Node / JavaScript
+node_modules/
+dist/
+build/
+.npm/
+.pnpm-store/
+
+# Python / virtual envs
+.venv/
+__pycache__/
+
+# Env files
+.env
+.env.*
+
+# Misc
+coverage/
+
+# Rust
+target/
+Cargo.lock
+*.rs.bk

@@ -6,7 +6,7 @@ Reusable copy-paste prompts. Prefer loading the matching skill under `agents/ski
 
 **Title:** Implement RFC
 
-**Purpose:** Continue or start RFC execution with Makefile, tests, browser MCP for UI, Context7 for libs, and RFC doc updates.
+**Purpose:** Continue or start RFC execution with Makefile, tests, browser MCP for UI, and RFC doc updates.
 
 **Prompt:**
 
@@ -22,7 +22,7 @@ For each checklist item in order:
 - Prefer tests first for new behavior; do not move to the next item until tests pass for the current scope.
 - Use only Makefile targets for build, test, lint, format, serve, etc.
 - For client-rendered UI, verify with the browser MCP available in this environment (e.g. Chrome DevTools: navigate, snapshot, screenshot)—not curl alone.
-- Use Context7 MCP for external library and framework documentation.
+- For external libraries, use official documentation and the versions pinned in this repo.
 
 After each task: check off the item when implementation and tests match acceptance; update Implementation notes with what changed, files touched, commands, and links for other agents.
 
@@ -68,7 +68,7 @@ Guidelines:
 - Integration tests must use temp dirs and never touch real user config
 - Include a Makefile with common dev commands (build, test, lint, format, clean, install)
 - Use canonical log lines / wide events pattern for observability where appropriate
-- Always use context7 MCP to verify latest API docs for libraries before recommending patterns
+- Ground library recommendations in official documentation and explicit versions
 
 Start by reading the spec, then ask clarifying questions before proposing architecture. Include Mermaid diagrams for visual alignment. After we agree on architecture, create the phased plan document.
 ```
@@ -94,7 +94,7 @@ Phases to implement: [n e.g. 1, 3, or "all"]
 
 Pre-implementation checks:
 1. Verify `.gitignore` includes build/test artifacts (e.g., `target/`, `*.lock`, coverage files)
-2. Use context7 MCP to check toolchain installation requirements for [NEW_LANGUAGE]
+2. Check official toolchain installation requirements for [NEW_LANGUAGE]
 3. Report all required toolchains and how to install them before proceeding
 
 Implementation workflow:
@@ -116,7 +116,7 @@ Implementation workflow:
    - If more phases remain (n > 1), proceed to next phase
 
 Guidelines:
-- Always use context7 MCP to verify latest crate APIs/docs before writing code
+- Verify third-party APIs against official docs and pinned versions before writing code
 - Use the Makefile for all build/test/lint commands
 - Never use `unwrap()` in production code paths (tests may use it)
 - Integration tests must use temp dirs (never touch real user config)
@@ -152,7 +152,7 @@ Read the plan doc to see completed items and pick up where we left off. Follow t
 - TDD: write/verify tests first
 - Use `make test` and `make lint` after changes
 - Check off completed items in the plan doc
-- Use context7 MCP for latest crate docs
+- Use official library documentation when API details matter
 - After each task, summarize what I should review to learn
 
 Begin.
@@ -162,12 +162,12 @@ Begin.
 
 **Title:** Alternative recommendation review
 
-**Purpose:** Compare a pasted alternative to your recommendation (integration + security).
+**Purpose:** Compare a pasted alternative to your recommendation using criteria that fit the decision (from this message, prior chat, or what clearly matters for the topic).
 
 **Prompt:**
 
 ```
-Here's an alternative research and recommendation. Weigh it against yours and think through it critically, especially for ease of integration and security. Tell me if you agree or disagree, or how it changes your recommendation and stance.
+Here's an alternative research and recommendation. Weigh it against ours (baseline from this thread). Use comparison criteria from this message if I list any; otherwise use what we already established in the chat, or infer only the dimensions that actually matter for this decision—not every topic needs integration, security, or ops analysis. Tell me if you agree or disagree, or how it changes your recommendation and stance.
 
 """
 

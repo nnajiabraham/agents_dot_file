@@ -1,19 +1,42 @@
-# Prompts Notepad
-Notepad for my reusable prompts.
+# Draft prompts
 
-----------------------------------------------------------
-**Prompt Title**: Implement RFC
-**Prompt Template**:
+Reusable copy-paste prompts. Prefer loading the matching skill under `agents/skills/<name>/SKILL.md` when available.
+
+---
+
+**Title:** Implement RFC
+
+**Purpose:** Continue or start RFC execution with Makefile, tests, browser MCP for UI, Context7 for libs, and RFC doc updates.
+
+**Prompt:**
+
 ```
-Continue implementing RFC-XXX-XXX.md from Task X:XXXXX. The frontend dev server is running on port 5173 and you should use the Playwright browser mcp tools available (mcp_playwright_browser_navigate, mcp_playwright_browser_snapshot, mcp_playwright_browser_take_screenshot, etc...) to verify UI changes instead of curl since React renders client-side. After completing each task, update the RFC document's checklist and Implementation Notes section with details about what was done, then proceed to the next task sequentially until all tasks are complete. Read the implementation notes summary section and task completed to figure out where we are with implementing this RFC and continue. Also take note of all the and always use the @Makefile for running cmds. Also you have access to context7 mcp tool always use this to verify you're using the latest or up to date instruction for external libraries. Iam not sure about the checked items and checked test cases so verify their implementation before to figure out if we should check off those items or we need to do stuff for those task.
+Continue implementing RFC-XXX-XXX.md from Task X:XXXXX.
+
+Orient using the RFC checklist and Implementation notes; do not trust existing checkmarks until verified in code and tests.
+
+Before changing behavior: run the full test suite via the Makefile and understand current project state (layout, schemas, APIs relevant to this RFC).
+
+For each checklist item in order:
+- Research the codebase enough to integrate cleanly.
+- Prefer tests first for new behavior; do not move to the next item until tests pass for the current scope.
+- Use only Makefile targets for build, test, lint, format, serve, etc.
+- For client-rendered UI, verify with the browser MCP available in this environment (e.g. Chrome DevTools: navigate, snapshot, screenshot)—not curl alone.
+- Use Context7 MCP for external library and framework documentation.
+
+After each task: check off the item when implementation and tests match acceptance; update Implementation notes with what changed, files touched, commands, and links for other agents.
+
+If tests fail: use verbose runs, focused logging, or full logs in a rewritten debug.log as needed.
 ```
-----------------------------------------------------------
 
+---
 
-----------------------------------------------------------
-**Prompt Title**: Design & Plan Project with Learning Goals
-**Purpose**: Use this when you have a project idea/spec and want to design the architecture + create a phased implementation plan optimized for learning a new language/framework.
-**Prompt Template**:
+**Title:** Design and plan project with learning goals
+
+**Purpose:** Produce architecture + phased learning plan docs from a spec (new language/framework).
+
+**Prompt:**
+
 ```
 I am an experienced software engineer with production experience in [YOUR_LANGUAGES e.g. JS/TS, Python, Java] learning [NEW_LANGUAGE e.g. Rust] by building a real project.
 
@@ -29,7 +52,7 @@ Help me design and plan this project with the goal of learning [NEW_LANGUAGE] wh
    - References section with relevant docs/articles
 
 2. **Phased implementation & learning plan** (`docs/[project]-design-and-phases.md`):
-   - "Rust concepts by phase" overview table
+   - "[NEW_LANGUAGE] concepts by phase" overview table
    - Each phase broken down with:
      - **Learning goals**: specific language concepts to focus on (with `[ ]` checkboxes)
      - **Implementation tasks**: granular file/module-level tasks (with `[ ]` checkboxes)
@@ -49,13 +72,15 @@ Guidelines:
 
 Start by reading the spec, then ask clarifying questions before proposing architecture. Include Mermaid diagrams for visual alignment. After we agree on architecture, create the phased plan document.
 ```
-----------------------------------------------------------
 
+---
 
-----------------------------------------------------------
-**Prompt Title**: Implement Phased Learning Project
-**Purpose**: Use this to kick off (or continue) implementation of a project that already has architecture + phased learning plan docs. Optimized for learning a new language while building.
-**Prompt Template**:
+**Title:** Implement phased learning project
+
+**Purpose:** Execute phases from spec + architecture + plan with TDD and Makefile.
+
+**Prompt:**
+
 ```
 I am learning [NEW_LANGUAGE e.g. Rust] by building [PROJECT_NAME].
 
@@ -106,13 +131,15 @@ After each phase, tell me:
 
 Let's begin.
 ```
-----------------------------------------------------------
 
+---
 
-----------------------------------------------------------
-**Prompt Title**: Continue Phased Learning Project
-**Purpose**: Short prompt to continue an in-progress phased learning project in a new chat context.
-**Prompt Template**:
+**Title:** Continue phased learning project
+
+**Purpose:** Short handoff prompt for a new chat.
+
+**Prompt:**
+
 ```
 Continue implementing [PROJECT_NAME] from Phase [X], Task: [TASK_DESCRIPTION].
 
@@ -130,4 +157,23 @@ Read the plan doc to see completed items and pick up where we left off. Follow t
 
 Begin.
 ```
-----------------------------------------------------------
+
+---
+
+**Title:** Alternative recommendation review
+
+**Purpose:** Compare a pasted alternative to your recommendation (integration + security).
+
+**Prompt:**
+
+```
+Here's an alternative research and recommendation. Weigh it against yours and think through it critically, especially for ease of integration and security. Tell me if you agree or disagree, or how it changes your recommendation and stance.
+
+"""
+
+[PASTE_ALTERNATIVE_HERE]
+
+"""
+```
+
+---

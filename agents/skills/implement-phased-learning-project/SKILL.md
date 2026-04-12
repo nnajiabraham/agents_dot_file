@@ -1,6 +1,6 @@
 ---
 name: implement-phased-learning-project
-description: Implement a phased learning project from existing spec, architecture, and plan docs using TDD, Makefile commands, and Context7 for library docs. Use when starting or continuing multi-phase build-a-project-to-learn work.
+description: Implement a phased learning project from existing spec, architecture, and plan docs using TDD and Makefile commands. Use when starting or continuing multi-phase build-a-project-to-learn work.
 ---
 
 # Implement phased learning project
@@ -25,7 +25,7 @@ Execute phases from `docs/[project]-design-and-phases.md` while updating learnin
 ### Pre-flight
 
 1. Confirm `.gitignore` excludes build artifacts, lockfiles if policy says so, coverage output, and other generated junk (adapt to language: e.g. `target/` for Rust).
-2. Use **Context7 MCP** to confirm toolchain install notes for the target language; report what must be installed before coding.
+2. Confirm toolchain and install steps for the target language from **official vendor or language documentation**; report what must be installed before coding.
 
 ### Per phase
 
@@ -34,7 +34,7 @@ Execute phases from `docs/[project]-design-and-phases.md` while updating learnin
    - Write or extend **tests first** when adding behavior.
    - Implement; run `make test` and `make lint` after substantive edits (use project’s Makefile targets).
    - Check off completed items in the plan doc.
-3. Use **Context7 MCP** before relying on third-party API details.
+3. Before relying on third-party API details, verify against **official library documentation** and the versions pinned in the project.
 
 ### After each phase
 

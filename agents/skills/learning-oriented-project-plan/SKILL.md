@@ -42,7 +42,7 @@ Produce two documents: an **architecture** doc and a **phased implementation & l
   - **Test cases** — `[ ]` unit and integration tests as the learning harness
   - **Review checklist** — `[ ]` what to study in the diff
 - TDD: tests prove correctness per phase
-- Suggested libraries with links; use **Context7 MCP** to validate current APIs before recommending patterns
+- Suggested libraries with links; ground recommendations in **official documentation** and the versions you propose
 - **Definition of Done** checklist for the whole project
 
 ### Cross-cutting guidelines

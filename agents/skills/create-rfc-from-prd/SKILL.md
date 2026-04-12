@@ -46,8 +46,6 @@ Before writing the body:
 - Libraries and **exact versions** where the stack is chosen
 - Security, performance, and operational considerations
 
-Use **Context7 MCP** when verifying current library documentation.
-
 ### 4) Plan the implementation (in the RFC)
 
 - File and directory changes

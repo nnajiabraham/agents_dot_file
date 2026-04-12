@@ -1,6 +1,6 @@
 ---
 name: implement-rfc
-description: Implement an RFC from the repo sequentially using the Makefile, tests as gates, browser MCP for client UI, and Context7 for external library docs. Update the RFC checklist and implementation notes after each task. Use when the user points at an RFC and wants execution through completion.
+description: Implement an RFC from the repo sequentially using the Makefile, tests as gates, and browser MCP for client UI. Update the RFC checklist and implementation notes after each task. Use when the user points at an RFC and wants execution through completion.
 ---
 
 # Implement RFC
@@ -35,7 +35,7 @@ For each checklist item in order:
 3. Use **only** `make` targets for build, test, lint, format, serve, etc. (e.g. `make test`, `make lint`), not ad hoc commands, unless the Makefile is missing a needed target and the user approves an exception.
 4. **Do not advance** to the next checklist item until **tests pass** for the current scope.
 5. For **client-rendered UI** (SPA, React, etc.), verify behavior with the **browser MCP available in the environment** (e.g. Chrome DevTools MCP: navigate, snapshot, screenshot). Do not rely on `curl` for HTML that requires JavaScript.
-6. Use **Context7 MCP** when checking external library or framework documentation so guidance matches current APIs.
+6. For external libraries, rely on the repo’s declared versions, lockfiles, and **official project documentation** (vendor docs, package READMEs) when API details matter.
 
 ### 3) Update the RFC after each task
 

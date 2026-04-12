@@ -25,7 +25,7 @@ Pick up implementation from a named phase and task using the same rules as **imp
    - TDD: write or verify tests first
    - `make test` / `make lint` after changes
    - Check off items in the plan as they complete
-   - **Context7 MCP** for external library documentation
+   - **Official library documentation** when API details matter
 4. After each task, tell the user what to review for learning (short summary).
 
 ## Note

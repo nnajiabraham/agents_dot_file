@@ -22,7 +22,7 @@ This is **not** a generic git merge of two histories. It is a **path-directed sy
 3. **Sync mode**
    - **`update`** — Align with the template: copy template files, merge ignores, merge `AGENTS.md` using the structure below. Minimal discovery of the target (only what’s needed to resolve paths and obvious breaks).
    - **`adapt`** — Same as `update`, plus **target-specific adaptation**: fill or rewrite `docs/agents/project.md`, `docs/agents/dev-workflow.md`, and `docs/agents/coding-conventions.md` using the target’s README, Makefiles, package manifests, and layout so links and commands are accurate for *this* repo.
-4. **Docs scope** — Default: **template subtrees only** — sync paths that exist under the template’s `docs/` (e.g. `docs/agents/`, `docs/prompts/`). Do **not** delete or replace unrelated trees such as `docs/rfcs/` unless the user explicitly asks for a broader scope.
+4. **Docs scope** — Default: **template subtrees only** — sync paths that exist under the template’s `docs/` (e.g. `docs/agents/`, `docs/prompts/`). Do **not** delete or replace unrelated trees such as `docs/rfcs/` unless the user explicitly asks for a broader scope. For **conflicts** under those subtrees (or when expanding scope), use the **conflict policy** below (`ask` / `template` / `target` / `merge`).
 5. **Conflict policy** — For any path that **exists in both** template and target and **differs**, choose one (per run or per file class):
 
    | Policy | Behavior |
@@ -34,7 +34,10 @@ This is **not** a generic git merge of two histories. It is a **path-directed sy
 
    The user may mix policies (e.g. `template` for `agents/skills/**`, `merge` for `AGENTS.md`, `target` for `.cursor/mcp.json`).
 
-6. **`agents/skills/` policy** — Default: **mirror template** (add/update files from template; remove skills that were removed from template **only if** user chooses “full mirror”; otherwise **additive** — add/update only, never delete target-only skills unless `template` policy applies to those paths).
+6. **`agents/skills/` layout policy** — Choose explicitly:
+   - **`additive`** (default): add/update files from the template; do **not** delete target-only skills or paths missing from the template.
+   - **`mirror`**: make `agents/skills/` match the template (add/update **and** remove skills not present in the template).
+
 7. **`.cursor/mcp.json` and secrets** — Copy **verbatim** from the template **only after explicit user approval** (the template may contain placeholder tokens such as `YOUR_GITHUB_PAT`). If the user has not approved, **omit or skip** `.cursor/mcp.json` and note it in the plan.
 
 Do **not** encode automatic removal of `.cursor/rules` or other Cursor rule folders unless the user requests it.

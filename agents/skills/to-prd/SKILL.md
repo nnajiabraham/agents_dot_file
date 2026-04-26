@@ -1,6 +1,6 @@
 ---
 name: to-prd
-description: Turn the current conversation context into a PRD and submit it as a GitHub issue. Use when user wants to create a PRD from the current context.
+description: Turn the current conversation context into a PRD and save it as a markdown file under the project's docs directory (e.g. docs/prd/). Use when the user wants to create a PRD from the current context.
 ---
 
 This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
@@ -15,7 +15,7 @@ A deep module (as opposed to a shallow module) is one which encapsulates a lot o
 
 Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
 
-3. Write the PRD using the template below and submit it as a GitHub issue.
+3. Write the PRD using the template below and save it as a new markdown file under `docs/prd/` in this repository (create the directory if it does not exist). Name the file with a short kebab-case slug derived from the feature (for example `docs/prd/user-dashboard-refresh.md`). If the slug is unclear, use `docs/prd/prd-YYYY-MM-DD.md` with today's date.
 
 ## Problem Statement
 

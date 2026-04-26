@@ -1,13 +1,15 @@
 ---
 name: qa
-description: Interactive QA session where user reports bugs or issues conversationally, and the agent files GitHub issues. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, file issues conversationally, or mentions "QA session".
+description: Interactive QA session where the user reports bugs or issues conversationally, and the agent writes durable markdown reports under the project's docs directory. Explores the codebase in the background for context and domain language. Use when the user wants to report bugs, do QA, capture findings in writing, or mentions "QA session".
 ---
 
 # QA Session
 
-Run an interactive QA session. The user describes problems they're encountering. You clarify, explore the codebase for context, and file GitHub issues that are durable, user-focused, and use the project's domain language.
+Run an interactive QA session. The user describes problems they're encountering. You clarify, explore the codebase for context, and write markdown reports that are durable, user-focused, and use the project's domain language.
 
-## For each issue the user raises
+**Output location:** Save reports under `docs/qa/` in this repository (create the directory if it does not exist). Use sequential four-digit filenames: scan `docs/qa/` for the highest existing `NNNN-*.md` number and increment by one (e.g. `0001-form-validation.md`, `0002-success-message.md`).
+
+## For each finding the user raises
 
 ### 1. Listen and lightly clarify
 
@@ -17,7 +19,7 @@ Let the user describe the problem in their own words. Ask **at most 2-3 short cl
 - Steps to reproduce (if not obvious)
 - Whether it's consistent or intermittent
 
-Do NOT over-interview. If the description is clear enough to file, move on.
+Do NOT over-interview. If the description is clear enough to write up, move on.
 
 ### 2. Explore the codebase in the background
 
@@ -27,11 +29,11 @@ While talking to the user, kick off an Agent (subagent_type=Explore) in the back
 - Understand what the feature is supposed to do
 - Identify the user-facing behavior boundary
 
-This context helps you write a better issue — but the issue itself should NOT reference specific files, line numbers, or internal implementation details.
+This context helps you write a better report — but the report itself should NOT reference specific files, line numbers, or internal implementation details.
 
-### 3. Assess scope: single issue or breakdown?
+### 3. Assess scope: single report or breakdown?
 
-Before filing, decide whether this is a **single issue** or needs to be **broken down** into multiple issues.
+Before writing, decide whether this is a **single markdown report** or needs to be **broken down** into multiple reports.
 
 Break down when:
 
@@ -39,22 +41,24 @@ Break down when:
 - There are clearly separable concerns that different people could work on in parallel
 - The user describes something that has multiple distinct failure modes or symptoms
 
-Keep as a single issue when:
+Keep as a single report when:
 
 - It's one behavior that's wrong in one place
 - The symptoms are all caused by the same root behavior
 
-### 4. File the GitHub issue(s)
+### 4. Write the markdown report(s)
 
-Create issues with `gh issue create`. Do NOT ask the user to review first — just file and share URLs.
+Create the file(s) under `docs/qa/` as described above. Do NOT ask the user to review the draft before saving — write the file, then tell them the path.
 
-Issues must be **durable** — they should still make sense after major refactors. Write from the user's perspective.
+Reports must be **durable** — they should still make sense after major refactors. Write from the user's perspective.
 
-#### For a single issue
+#### For a single report
 
 Use this template:
 
-```
+```md
+# {Short title}
+
 ## What happened
 
 [Describe the actual behavior the user experienced, in plain language]
@@ -71,19 +75,21 @@ Use this template:
 
 ## Additional context
 
-[Any extra observations from the user or from codebase exploration that help frame the issue — e.g. "this only happens when using the Docker layer, not the filesystem layer" — use domain language but don't cite files]
+[Any extra observations from the user or from codebase exploration that help frame the finding — e.g. "this only happens when using the Docker layer, not the filesystem layer" — use domain language but don't cite files]
 ```
 
-#### For a breakdown (multiple issues)
+#### For a breakdown (multiple reports)
 
-Create issues in dependency order (blockers first) so you can reference real issue numbers.
+Create reports in dependency order (blockers first) so you can reference real filenames in "Blocked by".
 
-Use this template for each sub-issue:
+Use this template for each sub-report:
 
-```
-## Parent issue
+```md
+# {Short title for this slice}
 
-#<parent-issue-number> (if you created a tracking issue) or "Reported during QA session"
+## Parent tracking
+
+Link to a parent summary file if you created one (e.g. `[QA session summary](./0000-qa-session-summary.md)`) or write "Reported during QA session".
 
 ## What's wrong
 
@@ -95,13 +101,13 @@ Use this template for each sub-issue:
 
 ## Steps to reproduce
 
-1. [Steps specific to THIS issue]
+1. [Steps specific to THIS finding]
 
 ## Blocked by
 
-- #<issue-number> (if this issue can't be fixed until another is resolved)
+- [](./NNNN-other-report.md) — brief reason (if this can't be addressed until another report is resolved)
 
-Or "None — can start immediately" if no blockers.
+Or **None — can start immediately** if no blockers.
 
 ## Additional context
 
@@ -110,21 +116,23 @@ Or "None — can start immediately" if no blockers.
 
 When creating a breakdown:
 
-- **Prefer many thin issues over few thick ones** — each should be independently fixable and verifiable
-- **Mark blocking relationships honestly** — if issue B genuinely can't be tested until issue A is fixed, say so. If they're independent, mark both as "None — can start immediately"
-- **Create issues in dependency order** so you can reference real issue numbers in "Blocked by"
-- **Maximize parallelism** — the goal is that multiple people (or agents) can grab different issues simultaneously
+- **Prefer many thin reports over few thick ones** — each should be independently fixable and verifiable
+- **Mark blocking relationships honestly** — if report B genuinely can't be tested until report A is fixed, say so. If they're independent, mark both as "None — can start immediately"
+- **Create reports in dependency order** so you can reference real paths in "Blocked by"
+- **Maximize parallelism** — the goal is that multiple people (or agents) can pick up different reports simultaneously
 
-#### Rules for all issue bodies
+Optional: add a short index file `docs/qa/0000-qa-session-YYYY-MM-DD.md` listing each report path and one-line summary when the session produces many files.
+
+#### Rules for all report bodies
 
 - **No file paths or line numbers** — these go stale
 - **Use the project's domain language** (check UBIQUITOUS_LANGUAGE.md if it exists)
 - **Describe behaviors, not code** — "the sync service fails to apply the patch" not "applyPatch() throws on line 42"
 - **Reproduction steps are mandatory** — if you can't determine them, ask the user
-- **Keep it concise** — a developer should be able to read the issue in 30 seconds
+- **Keep it concise** — a developer should be able to read the report in 30 seconds
 
-After filing, print all issue URLs (with blocking relationships summarized) and ask: "Next issue, or are we done?"
+After saving, print the relative path(s) to each file (with blocking relationships summarized) and ask: "Next finding, or are we done?"
 
 ### 5. Continue the session
 
-Keep going until the user says they're done. Each issue is independent — don't batch them.
+Keep going until the user says they're done. Each finding is independent — don't batch them.
